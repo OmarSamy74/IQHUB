@@ -1,5 +1,6 @@
 // components
 import { Navbar, Footer } from "@/components";
+// Note: do not call client hooks here; page is a server component.
 
 // sections
 import Hero from "./hero";

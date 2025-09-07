@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { FixedPlugin, Layout } from "@/components";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { I18nProvider } from "@/contexts/I18nContext";
+import { CurrencyProvider } from "@/contexts/CurrencyContext";
 
 // Using system fonts as fallback due to Google Fonts connectivity issues
 const roboto = {
@@ -33,10 +35,14 @@ export default function RootLayout({
       </head>
       <body className={roboto.className}>
         <ThemeProvider>
-          <Layout>
-            {children}
-            <FixedPlugin />
-          </Layout>
+          <I18nProvider>
+            <CurrencyProvider>
+              <Layout>
+                {children}
+                <FixedPlugin />
+              </Layout>
+            </CurrencyProvider>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

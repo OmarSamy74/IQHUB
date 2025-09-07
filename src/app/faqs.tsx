@@ -1,32 +1,34 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 // Removed unused imports due to Material Tailwind compatibility issues
 
 const FAQS = [
   {
-    title: "How do I get started?",
-    desc: "Getting started is easy! Simply [Provide a brief overview of the initial steps or link to a detailed guide].",
+    titleKey: "faq_start_title",
+    descKey: "faq_start_desc",
   },
   {
-    title: "Is there a free trial available?",
-    desc: "Yes, we offer a 30 days free trial so you can experience our mobile application with no commitment.",
+    titleKey: "faq_trial_title",
+    descKey: "faq_trial_desc",
   },
   {
-    title: "How can I upgrade my account?",
-    desc: "To upgrade your account, log in and navigate to the [Upgrade Account] section in your dashboard. Follow the prompts to select your preferred plan.",
+    titleKey: "faq_upgrade_title",
+    descKey: "faq_upgrade_desc",
   },
   {
-    title: "Can I cancel my subscription anytime?",
-    desc: "Absolutely, you can cancel your subscription at any time with no questions asked. Your subscription will remain active until the end of the current billing cycle.",
+    titleKey: "faq_cancel_title",
+    descKey: "faq_cancel_desc",
   },
   {
-    title: "How can I upgrade my account to paid?",
-    desc: "To upgrade your account, log in and navigate to the [Upgrade Account] section in your dashboard. Follow the prompts to select your preferred plan.",
+    titleKey: "faq_paid_title",
+    descKey: "faq_paid_desc",
   },
   {
-    title: "What if I need help or have technical issues?",
-    desc: "Our dedicated support team is here to assist you. Reach out via [mention preferred support channels, e.g., live chat, email, or phone], and we'll get back to you promptly.",
+    titleKey: "faq_support_title",
+    descKey: "faq_support_desc",
   },
 ];
 
@@ -36,24 +38,22 @@ export function Faqs() {
       <div className="container max-w-6xl mx-auto">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-blue-gray-900 mb-4">
-            Frequently asked questions
+            <T k="faq_title" />
           </h1>
           <p className="text-xl text-gray-500 mx-auto mb-24 lg:w-3/5">
-            A lot of people don&apos;t appreciate the moment until it&apos;s
-            passed. I&apos;m not trying my hardest, and I&apos;m not trying to
-            do
+            <T k="faq_subtitle" />
           </p>
         </div>
 
         <div className="grid gap-20 md:grid-cols-1 lg:grid-cols-3">
-          {FAQS.map(({ title, desc }) => (
-            <div key={title} className="bg-transparent">
+          {FAQS.map(({ titleKey, descKey }, index) => (
+            <div key={index} className="bg-transparent">
               <h4 className="text-2xl font-semibold text-blue-gray-900 pb-6">
-                {title}
+                <T k={titleKey} />
               </h4>
               <div className="pt-2">
                 <p className="font-normal text-gray-500">
-                  {desc}
+                  <T k={descKey} />
                 </p>
               </div>
             </div>

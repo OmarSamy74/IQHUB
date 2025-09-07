@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 // Removed IconButton import due to Material Tailwind compatibility issues
 
 const LINKS = ["About", "Education", "Insights", "Events", "Community"];
@@ -25,7 +27,7 @@ export function Footer() {
               <span className="text-white text-2xl font-bold">IQ Stats Hub</span>
             </div>
             <p className="text-white mb-6 font-normal">
-              Building the future of the sports industry through innovative education and professional development.
+              <T k="footer_description" />
             </p>
             <div className="flex justify-center md:justify-start gap-4">
               <button className="text-white hover:text-blue-300 transition-colors">
@@ -45,12 +47,12 @@ export function Footer() {
 
           {/* Navigation Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Navigation</h4>
+            <h4 className="text-white font-semibold mb-4"><T k="footer_navigation" /></h4>
             <ul className="space-y-2">
               {LINKS.map((link) => (
                 <li key={link}>
                   <a href="#!" className="text-white hover:text-blue-300 transition-colors text-sm">
-                    {link}
+                    <T k={`nav_${link.toLowerCase()}`} />
                   </a>
                 </li>
               ))}
@@ -59,12 +61,12 @@ export function Footer() {
 
           {/* Programs */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Programs</h4>
+            <h4 className="text-white font-semibold mb-4"><T k="footer_programs" /></h4>
             <ul className="space-y-2">
               {PROGRAM_LINKS.map((link) => (
                 <li key={link}>
                   <a href="#!" className="text-white hover:text-blue-300 transition-colors text-sm">
-                    {link}
+                    <T k={`program_${link.toLowerCase().replace(/\s+/g, '_')}`} />
                   </a>
                 </li>
               ))}
@@ -73,12 +75,12 @@ export function Footer() {
 
           {/* Subjects */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Subjects</h4>
+            <h4 className="text-white font-semibold mb-4"><T k="footer_subjects" /></h4>
             <ul className="space-y-2">
               {SUBJECT_LINKS.map((link) => (
                 <li key={link}>
                   <a href="#!" className="text-white hover:text-blue-300 transition-colors text-sm">
-                    {link}
+                    <T k={`subject_${link.toLowerCase().replace(/\s+/g, '_').replace(/&/g, 'and')}`} />
                   </a>
                 </li>
               ))}
@@ -88,13 +90,13 @@ export function Footer() {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white text-center md:text-left font-normal opacity-75 text-sm">
-              &copy; {CURRENT_YEAR} IQ Stats Hub. All rights reserved. | 
-              <a href="#!" className="hover:text-blue-300 transition-colors ml-1">Legal Terms</a> | 
-              <a href="#!" className="hover:text-blue-300 transition-colors ml-1">Privacy Policy</a> | 
-              <a href="#!" className="hover:text-blue-300 transition-colors ml-1">Contact Us</a>
+              &copy; {CURRENT_YEAR} IQ Stats Hub. <T k="footer_rights" /> | 
+              <a href="#!" className="hover:text-blue-300 transition-colors ml-1"><T k="footer_legal" /></a> | 
+              <a href="#!" className="hover:text-blue-300 transition-colors ml-1"><T k="footer_privacy" /></a> | 
+              <a href="#!" className="hover:text-blue-300 transition-colors ml-1"><T k="footer_contact" /></a>
             </p>
             <div className="text-white text-sm opacity-75">
-              Powered by Barça Innovation Hub Education Platform
+              <T k="footer_powered_by" />
             </div>
           </div>
         </div>

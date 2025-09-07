@@ -2,6 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 
 const experts = [
   {
@@ -51,9 +53,9 @@ export function ExpertExperience() {
     <section className="py-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Expert Experience</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4"><T k="experts_title" /></h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Learn from the world&apos;s leading sports professionals and industry experts
+            <T k="experts_subtitle" />
           </p>
         </div>
 
@@ -102,34 +104,34 @@ export function ExpertExperience() {
         <div className="mt-16 text-center">
           <div className="bg-gray-50 rounded-2xl p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Why Learn from Our Experts?
+              <T k="experts_why_title" />
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🏆</span>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Proven Track Record</h4>
+                <h4 className="font-semibold text-gray-900 mb-2"><T k="experts_track_record" /></h4>
                 <p className="text-sm text-gray-600">
-                  Our experts have worked with top-tier athletes and organizations worldwide
+                  <T k="experts_track_record_desc" />
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🔬</span>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Cutting-Edge Research</h4>
+                <h4 className="font-semibold text-gray-900 mb-2"><T k="experts_research" /></h4>
                 <p className="text-sm text-gray-600">
-                  Access to the latest research and innovative methodologies in sports science
+                  <T k="experts_research_desc" />
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🌍</span>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Global Perspective</h4>
+                <h4 className="font-semibold text-gray-900 mb-2"><T k="experts_global" /></h4>
                 <p className="text-sm text-gray-600">
-                  Learn from diverse international experiences and best practices
+                  <T k="experts_global_desc" />
                 </p>
               </div>
             </div>

@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const Price = dynamic(() => import("@/components/price"), { ssr: false });
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 
 const programTypes = [
   { id: "all", name: "All Programs", count: 24 },
@@ -38,7 +41,7 @@ const programs = [
     duration: "12 months",
     level: "Master's Degree",
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
-    price: "€8,500",
+    price: 8500,
     rating: 4.9,
     students: 1247
   },
@@ -52,7 +55,7 @@ const programs = [
     duration: "6 months",
     level: "Executive",
     image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop&crop=center",
-    price: "€6,200",
+    price: 6200,
     rating: 4.8,
     students: 892
   },
@@ -66,7 +69,7 @@ const programs = [
     duration: "18 months",
     level: "MBA",
     image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop&crop=center",
-    price: "€12,000",
+    price: 12000,
     rating: 4.9,
     students: 567
   },
@@ -81,7 +84,7 @@ const programs = [
     duration: "4 months",
     level: "Executive",
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center",
-    price: "€4,800",
+    price: 4800,
     rating: 4.7,
     students: 1156
   },
@@ -95,7 +98,7 @@ const programs = [
     duration: "5 months",
     level: "Executive",
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
-    price: "€5,500",
+    price: 5500,
     rating: 4.8,
     students: 743
   },
@@ -110,7 +113,7 @@ const programs = [
     duration: "3 months",
     level: "Professional Diploma",
     image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400&h=300&fit=crop&crop=center",
-    price: "€2,800",
+    price: 2800,
     rating: 4.6,
     students: 2134
   },
@@ -124,7 +127,7 @@ const programs = [
     duration: "4 months",
     level: "Professional Diploma",
     image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop&crop=center",
-    price: "€3,200",
+    price: 3200,
     rating: 4.7,
     students: 1876
   },
@@ -139,7 +142,7 @@ const programs = [
     duration: "6 weeks",
     level: "Certificate",
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
-    price: "€1,200",
+    price: 1200,
     rating: 4.5,
     students: 3456
   },
@@ -153,7 +156,7 @@ const programs = [
     duration: "4 weeks",
     level: "Certificate",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&crop=center",
-    price: "€800",
+    price: 800,
     rating: 4.4,
     students: 4123
   },
@@ -167,7 +170,7 @@ const programs = [
     duration: "5 weeks",
     level: "Certificate",
     image: "https://images.unsplash.com/photo-1592478411213-6153e4ebc696?w=400&h=300&fit=crop&crop=center",
-    price: "€1,000",
+    price: 1000,
     rating: 4.6,
     students: 2789
   }
@@ -190,9 +193,9 @@ export default function Courses() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Programs</h2>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4"><T k="programs_title" /></h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Comprehensive sports education programs designed to develop the next generation of sports professionals
+            <T k="programs_subtitle" />
           </p>
         </div>
 
@@ -332,7 +335,7 @@ export default function Courses() {
                 {/* Price */}
                 <div className="flex justify-between items-center">
                   <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {program.price}
+                    <Price amount={program.price} />
                   </div>
                   <Link 
                     href={`/enrollment?courseId=${program.id}`}

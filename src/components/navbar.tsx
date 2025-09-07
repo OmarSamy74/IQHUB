@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 import { useThemeSafe } from "@/contexts/ThemeContext";
+import { useI18n } from "@/contexts/I18nContext";
+import { useCurrency, SupportedCurrency } from "@/contexts/CurrencyContext";
 
 interface NavItemProps {
   children: React.ReactNode;
@@ -24,6 +26,8 @@ export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [isScrolling, setIsScrolling] = React.useState(false);
   const { theme, toggleTheme } = useThemeSafe();
+  const { locale, setLocale, t } = useI18n();
+  const { currency, setCurrency } = useCurrency();
 
   React.useEffect(() => {
     function handleScroll() {
@@ -42,12 +46,31 @@ export function Navbar() {
         </Link>
         <div className="hidden lg:flex items-center gap-8">
           <ul className="flex items-center gap-8">
-            <NavItem href="/about">About</NavItem>
-            <NavItem href="/courses">Education</NavItem>
-            <NavItem href="#insights">Insights</NavItem>
-            <NavItem href="#events">Events</NavItem>
-            <NavItem href="#community">Community</NavItem>
+            <NavItem href="/about">{t('nav_about')}</NavItem>
+            <NavItem href="/courses">{t('nav_education')}</NavItem>
+            <NavItem href="#insights">{t('nav_insights')}</NavItem>
+            <NavItem href="#events">{t('nav_events')}</NavItem>
+            <NavItem href="#community">{t('nav_community')}</NavItem>
           </ul>
+          <select
+            value={locale}
+            onChange={(e) => setLocale(e.target.value as 'en' | 'ar')}
+            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+            aria-label="Language"
+          >
+            <option value="en">EN</option>
+            <option value="ar">AR</option>
+          </select>
+          <select
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value as SupportedCurrency)}
+            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+            aria-label="Currency"
+          >
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="EGP">EGP</option>
+          </select>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
@@ -88,12 +111,33 @@ export function Navbar() {
       {open && (
         <div className="lg:hidden mt-2">
           <ul className="flex flex-col gap-2">
-            <NavItem href="/about">About</NavItem>
-            <NavItem href="/courses">Education</NavItem>
-            <NavItem href="#insights">Insights</NavItem>
-            <NavItem href="#events">Events</NavItem>
-            <NavItem href="#community">Community</NavItem>
+            <NavItem href="/about">{t('nav_about')}</NavItem>
+            <NavItem href="/courses">{t('nav_education')}</NavItem>
+            <NavItem href="#insights">{t('nav_insights')}</NavItem>
+            <NavItem href="#events">{t('nav_events')}</NavItem>
+            <NavItem href="#community">{t('nav_community')}</NavItem>
           </ul>
+          <div className="flex items-center gap-2 mt-2">
+            <select
+              value={locale}
+              onChange={(e) => setLocale(e.target.value as 'en' | 'ar')}
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 flex-1"
+              aria-label="Language"
+            >
+              <option value="en">EN</option>
+              <option value="ar">AR</option>
+            </select>
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as SupportedCurrency)}
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 flex-1"
+              aria-label="Currency"
+            >
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="EGP">EGP</option>
+            </select>
+          </div>
         </div>
       )}
     </nav>

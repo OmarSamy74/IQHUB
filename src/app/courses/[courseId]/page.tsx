@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const Price = dynamic(() => import("@/components/price"), { ssr: false });
 
 // Generate static params for all courses
 export async function generateStaticParams() {
@@ -23,7 +25,7 @@ const courseData = {
     duration: "12 months",
     level: "Master's Degree",
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=center",
-    price: "€8,500",
+    price: 8500,
     rating: 4.9,
     students: 1247,
     instructor: "Dr. Eva Ferrer Vidal-Barraquer",
@@ -61,7 +63,7 @@ const courseData = {
     duration: "6 months",
     level: "Executive",
     image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&h=600&fit=crop&crop=center",
-    price: "€6,200",
+    price: 6200,
     rating: 4.8,
     students: 892,
     instructor: "Albert Mundet",
@@ -144,7 +146,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                   href={`/enrollment?courseId=${course.id}`}
                   className="bg-white dark:bg-gray-800 text-blue-900 dark:text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center"
                 >
-                  🚀 Enroll Now - {course.price}
+                  🚀 Enroll Now - <Price amount={course.price} />
                 </Link>
                 <button className="border-2 border-white dark:border-gray-300 text-white dark:text-gray-200 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white dark:hover:bg-gray-800 hover:text-blue-900 dark:hover:text-white transition-all duration-300">
                   📹 Watch Preview

@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const Price = dynamic(() => import("@/components/price"), { ssr: false });
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 
 export default function PaymentPage() {
   const [courseId, setCourseId] = useState<string | null>(null);
@@ -47,7 +50,7 @@ export default function PaymentPage() {
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            💳 Secure Payment
+            💳 <T k="secure_payment" />
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
             Complete your enrollment with our secure payment system
@@ -58,7 +61,7 @@ export default function PaymentPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sticky top-8 animate-slide-up">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Order Summary</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6"><T k="order_summary" /></h3>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
@@ -91,8 +94,8 @@ export default function PaymentPage() {
                   </div>
                   <div className="border-t pt-3">
                     <div className="flex justify-between text-lg font-bold">
-                      <span>Total:</span>
-                      <span className="text-blue-600">€8,500.00</span>
+                      <span><T k="total" />:</span>
+                      <span className="text-blue-600"><Price amount={8500} /></span>
                     </div>
                   </div>
                 </div>
@@ -249,7 +252,7 @@ export default function PaymentPage() {
                           Processing Payment...
                         </div>
                       ) : (
-                        '💳 Pay €8,500.00 Now'
+                        <>💳 Pay <Price amount={8500} /> Now</>
                       )}
                     </button>
                   </div>
