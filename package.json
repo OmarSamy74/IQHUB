@@ -5,6 +5,10 @@
   "author": "Creative Tim",
   "license": "See license in https://www.creative-tim.com/license",
   "homepage": "https://themewagon.github.io/NextJS-Tailwind-App-Presentation-Page",
+  "engines": {
+    "node": ">=18.20.4",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
