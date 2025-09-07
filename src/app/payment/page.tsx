@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 
 export default function PaymentPage() {
-  const searchParams = useSearchParams();
-  const courseId = searchParams.get('courseId');
+  const [courseId, setCourseId] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Get courseId from URL params on client side
+    const urlParams = new URLSearchParams(window.location.search);
+    setCourseId(urlParams.get('courseId'));
+  }, []);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [cardData, setCardData] = useState({
     cardNumber: '',

@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 export default function EnrollmentPage() {
-  const searchParams = useSearchParams();
-  const courseId = searchParams.get('courseId');
+  const [courseId, setCourseId] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Get courseId from URL params on client side
+    const urlParams = new URLSearchParams(window.location.search);
+    setCourseId(urlParams.get('courseId'));
+  }, []);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
