@@ -2,7 +2,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { Navbar, Footer } from "@/components";
 const Price = dynamic(() => import("@/components/price"), { ssr: false });
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 
 // Generate static params for all courses
 export async function generateStaticParams() {
@@ -98,22 +100,28 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
 
   if (!course) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Course Not Found</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">The course you&apos;re looking for doesn&apos;t exist.</p>
-          <Link href="/courses" className="bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
-            Browse All Courses
-          </Link>
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Course Not Found</h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">The course you&apos;re looking for doesn&apos;t exist.</p>
+            <Link href="/courses" className="bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
+              Browse All Courses
+            </Link>
+          </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-20">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in">
@@ -135,10 +143,10 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                 <div className="flex items-center gap-2">
                   <span className="text-yellow-400">⭐</span>
                   <span className="text-white font-semibold">{course.rating}</span>
-                  <span className="text-blue-200">({course.students.toLocaleString()} students)</span>
+                  <span className="text-blue-200">({course.students.toLocaleString()} <T k="course_students_count" />)</span>
                 </div>
                 <div className="text-white">
-                  <span className="text-blue-200">Duration:</span> {course.duration}
+                  <span className="text-blue-200"><T k="course_duration" />:</span> {course.duration}
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -146,10 +154,10 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                   href={`/enrollment?courseId=${course.id}`}
                   className="bg-white dark:bg-gray-800 text-blue-900 dark:text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center"
                 >
-                  🚀 Enroll Now - <Price amount={course.price} />
+                  🚀 <T k="course_enroll_now" /> - <Price amount={course.price} />
                 </Link>
                 <button className="border-2 border-white dark:border-gray-300 text-white dark:text-gray-200 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white dark:hover:bg-gray-800 hover:text-blue-900 dark:hover:text-white transition-all duration-300">
-                  📹 Watch Preview
+                  📹 <T k="course_watch_preview" />
                 </button>
               </div>
             </div>
@@ -167,6 +175,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             </div>
           </div>
         </div>
+        </div>
       </div>
 
       {/* Course Content */}
@@ -176,7 +185,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
           <div className="lg:col-span-2 space-y-12">
             {/* About Course */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">About This Course</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_about" /></h2>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
                 {course.fullDescription}
               </p>
@@ -184,7 +193,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
 
             {/* Course Modules */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Course Modules</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_modules" /></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {course.modules.map((module, index) => (
                   <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors">
@@ -199,7 +208,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
 
             {/* Learning Outcomes */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">What You&apos;ll Learn</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_learn" /></h2>
               <ul className="space-y-4">
                 {course.outcomes.map((outcome, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -215,7 +224,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
           <div className="space-y-6">
             {/* Instructor */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Instructor</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_instructor" /></h3>
               <div className="flex items-center gap-4 mb-4">
                 <Image 
                   src={course.instructorImage} 
@@ -226,36 +235,36 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                 />
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">{course.instructor}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Lead Instructor</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300"><T k="course_lead_instructor" /></p>
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
-                Expert with 15+ years of experience in sports innovation and technology.
+                <T k="course_experience" />
               </p>
             </div>
 
             {/* Course Info */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Course Information</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_information" /></h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Level:</span>
+                  <span className="text-gray-600 dark:text-gray-300"><T k="course_level" />:</span>
                   <span className="font-semibold text-gray-900 dark:text-white">{course.level}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Duration:</span>
+                  <span className="text-gray-600 dark:text-gray-300"><T k="course_duration" />:</span>
                   <span className="font-semibold text-gray-900 dark:text-white">{course.duration}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Modality:</span>
+                  <span className="text-gray-600 dark:text-gray-300"><T k="course_modality" />:</span>
                   <span className="font-semibold text-gray-900 dark:text-white">{course.modality}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Students:</span>
+                  <span className="text-gray-600 dark:text-gray-300"><T k="course_students" />:</span>
                   <span className="font-semibold text-gray-900 dark:text-white">{course.students.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Rating:</span>
+                  <span className="text-gray-600 dark:text-gray-300"><T k="course_rating" />:</span>
                   <span className="font-semibold text-gray-900 dark:text-white flex items-center gap-1">
                     ⭐ {course.rating}
                   </span>
@@ -265,7 +274,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
 
             {/* Requirements */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_requirements" /></h3>
               <ul className="space-y-2">
                 {course.requirements.map((requirement, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
@@ -278,18 +287,19 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
 
             {/* Enroll Button */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-6 text-center animate-bounce-in">
-              <h3 className="text-xl font-bold text-white mb-2">Ready to Start?</h3>
-              <p className="text-blue-100 mb-4">Join thousands of professionals transforming their careers</p>
+              <h3 className="text-xl font-bold text-white mb-2"><T k="course_ready" /></h3>
+              <p className="text-blue-100 mb-4"><T k="course_join" /></p>
               <Link 
                 href={`/enrollment?courseId=${course.id}`}
                 className="block bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
               >
-                Enroll Now - {course.price}
+                <T k="course_enroll_now" /> - <Price amount={course.price} />
               </Link>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }

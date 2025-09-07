@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
+const T = dynamic(() => import("@/components/T"), { ssr: false });
 // Removed Typography import due to Material Tailwind compatibility issues
 import { UserIcon } from "@heroicons/react/24/solid";
 import TestimonialCard from "../components/testimonial-card";
@@ -39,12 +41,10 @@ export function Testimonials() {
             <UserIcon className="h-6 w-6" />
           </div>
           <h2 className="text-3xl font-bold text-blue-gray-900 mb-2">
-            What Clients Say
+            <T k="testimonials_title" />
           </h2>
           <p className="text-xl text-gray-600 mb-10 max-w-3xl text-center">
-            Discover what our valued clients have to say about their experiences
-            with our services. We take pride in delivering exceptional results
-            and fostering lasting partnerships.
+            <T k="testimonials_subtitle" />
           </p>
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3 lg:px-20">

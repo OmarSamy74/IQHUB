@@ -8,25 +8,32 @@ const Price = dynamic(() => import("@/components/price"), { ssr: false });
 const T = dynamic(() => import("@/components/T"), { ssr: false });
 
 const programTypes = [
-  { id: "all", name: "All Programs", count: 24 },
-  { id: "masters", name: "Masters", count: 8 },
-  { id: "executive", name: "Executive Programmes", count: 7 },
-  { id: "advanced", name: "Advanced Programmes", count: 5 },
-  { id: "specialized", name: "Specialized Programmes", count: 3 },
-  { id: "courses", name: "Courses", count: 8 }
+  { id: "all", nameKey: "courses_all_programs", count: 24 },
+  { id: "masters", nameKey: "program_masters", count: 8 },
+  { id: "executive", nameKey: "program_executive_programmes", count: 7 },
+  { id: "advanced", nameKey: "program_advanced_programmes", count: 5 },
+  { id: "specialized", nameKey: "program_specialized_programmes", count: 3 },
+  { id: "courses", nameKey: "program_courses", count: 8 }
 ];
 
 const modalities = [
-  { id: "all", name: "All Modalities" },
-  { id: "online", name: "Online" },
-  { id: "onsite", name: "Onsite" },
-  { id: "hybrid", name: "Hybrid" }
+  { id: "all", nameKey: "courses_all_modalities" },
+  { id: "online", nameKey: "courses_online" },
+  { id: "onsite", nameKey: "courses_onsite" },
+  { id: "hybrid", nameKey: "courses_hybrid" }
 ];
 
 const subjects = [
-  "Advanced Performance", "Coaching", "Health & Wellness", "New Media", 
-  "Nutrition", "Social Impact", "Sports Analytics", "Sports Business", 
-  "Sports Science", "Tech & Innovation"
+  { name: "Advanced Performance", key: "subject_advanced_performance" },
+  { name: "Coaching", key: "subject_coaching" },
+  { name: "Health & Wellness", key: "subject_health_and_wellness" },
+  { name: "New Media", key: "courses_new_media" },
+  { name: "Nutrition", key: "courses_nutrition" },
+  { name: "Social Impact", key: "courses_social_impact" },
+  { name: "Sports Analytics", key: "subject_sports_analytics" },
+  { name: "Sports Business", key: "subject_sports_business" },
+  { name: "Sports Science", key: "subject_sports_science" },
+  { name: "Tech & Innovation", key: "courses_tech_innovation" }
 ];
 
 const programs = [
@@ -203,7 +210,7 @@ export default function Courses() {
         <div className="mb-12">
           {/* Program Types */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Program Types</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4"><T k="courses_program_types" /></h3>
             <div className="flex flex-wrap gap-2">
               {programTypes.map((type) => (
                 <button
@@ -215,7 +222,7 @@ export default function Courses() {
                       : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
                   }`}
                 >
-                  {type.name} ({type.count})
+                  <T k={type.nameKey} /> ({type.count})
                 </button>
               ))}
             </div>
@@ -223,7 +230,7 @@ export default function Courses() {
 
           {/* Modalities */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Modalities</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4"><T k="courses_modalities" /></h3>
             <div className="flex flex-wrap gap-2">
               {modalities.map((modality) => (
                 <button
@@ -235,7 +242,7 @@ export default function Courses() {
                       : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
                   }`}
                 >
-                  {modality.name}
+                  <T k={modality.nameKey} />
                 </button>
               ))}
             </div>
@@ -243,7 +250,7 @@ export default function Courses() {
 
           {/* Subjects */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Academic Subjects</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4"><T k="courses_academic_subjects" /></h3>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedSubject("all")}
@@ -253,19 +260,19 @@ export default function Courses() {
                     : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
                 }`}
               >
-                All Subjects
+                <T k="courses_all_subjects" />
               </button>
               {subjects.map((subject) => (
                 <button
-                  key={subject}
-                  onClick={() => setSelectedSubject(subject)}
+                  key={subject.name}
+                  onClick={() => setSelectedSubject(subject.name)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedSubject === subject
+                    selectedSubject === subject.name
                       ? "bg-blue-600 dark:bg-blue-500 text-white"
                       : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
                   }`}
                 >
-                  {subject}
+                  <T k={subject.key} />
                 </button>
               ))}
             </div>
@@ -329,7 +336,7 @@ export default function Courses() {
                 {/* Stats */}
                 <div className="flex justify-between items-center mb-4 text-sm text-gray-500 dark:text-gray-400">
                   <span>⏱️ {program.duration}</span>
-                  <span>👥 {program.students.toLocaleString()} students</span>
+                  <span>👥 {program.students.toLocaleString()} <T k="courses_students" /></span>
                 </div>
 
                 {/* Price */}
@@ -341,7 +348,7 @@ export default function Courses() {
                     href={`/enrollment?courseId=${program.id}`}
                     className="block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 text-center"
                   >
-                    Enroll Now
+                    <T k="courses_enroll_now" />
                   </Link>
                 </div>
               </div>
