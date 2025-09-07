@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const programTypes = [
   { id: "all", name: "All Programs", count: 24 },
@@ -275,9 +276,11 @@ export default function Courses() {
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 h-full hover-lift animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
                 {/* Program Image */}
                 <div className="relative mb-4 rounded-lg overflow-hidden">
-                  <img 
+                  <Image 
                     src={program.image} 
                     alt={program.title}
+                    width={400}
+                    height={300}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">

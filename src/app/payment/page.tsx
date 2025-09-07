@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
 export default function PaymentPage() {
@@ -57,9 +58,11 @@ export default function PaymentPage() {
               
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop&crop=center" 
                     alt="Course" 
+                    width={64}
+                    height={64}
                     className="w-16 h-16 rounded-lg object-cover"
                   />
                   <div>

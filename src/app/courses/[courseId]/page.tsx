@@ -153,9 +153,11 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             </div>
             <div className="animate-slide-up">
               <div className="relative">
-                <img 
+                <Image 
                   src={course.image} 
                   alt={course.title}
+                  width={800}
+                  height={600}
                   className="w-full h-96 object-cover rounded-2xl shadow-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
@@ -213,9 +215,11 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Instructor</h3>
               <div className="flex items-center gap-4 mb-4">
-                <img 
+                <Image 
                   src={course.instructorImage} 
                   alt={course.instructor}
+                  width={64}
+                  height={64}
                   className="w-16 h-16 rounded-full object-cover"
                 />
                 <div>
