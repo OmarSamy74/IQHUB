@@ -251,7 +251,7 @@ function OverviewPanel() {
           <div className="space-y-3">
             <div className="flex items-center text-sm">
               <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-              <span className="text-gray-600 dark:text-gray-300">New course "Advanced Analytics" published</span>
+              <span className="text-gray-600 dark:text-gray-300">New course &quot;Advanced Analytics&quot; published</span>
             </div>
             <div className="flex items-center text-sm">
               <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>

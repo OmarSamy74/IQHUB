@@ -137,7 +137,7 @@ export default function CoursesManagement() {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-10 w-10">
-                      <img className="h-10 w-10 rounded-lg object-cover" src={course.image} alt={course.title} />
+                      <img className="h-10 w-10 rounded-lg object-cover" src={course.image} alt={course.title} loading="lazy" decoding="async" />
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900 dark:text-white">{course.title}</div>
@@ -281,7 +281,7 @@ function CourseModal({ course, isEditing, onSave, onClose }: CourseModalProps) {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 >
                   <option value="">Select Level</option>
-                  <option value="Master's">Master's</option>
+                  <option value="Master&apos;s">Master&apos;s</option>
                   <option value="Executive">Executive</option>
                   <option value="Advanced">Advanced</option>
                   <option value="Beginner">Beginner</option>
