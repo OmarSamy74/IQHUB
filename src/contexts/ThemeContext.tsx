@@ -31,10 +31,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (mounted && typeof window !== 'undefined') {
       localStorage.setItem('theme', theme);
+      const root = document.documentElement;
       if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
+        root.classList.add('dark');
+        root.setAttribute('data-theme', 'dark');
       } else {
-        document.documentElement.classList.remove('dark');
+        root.classList.remove('dark');
+        root.setAttribute('data-theme', 'light');
       }
     }
   }, [theme, mounted]);

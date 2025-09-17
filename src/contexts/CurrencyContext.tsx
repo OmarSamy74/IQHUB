@@ -11,11 +11,12 @@ interface CurrencyContextType {
   convert: (amount: number, to?: SupportedCurrency) => number;
 }
 
-// Simple fixed rates; in a real app, fetch dynamically
+// Simple fixed rates vs USD; used to convert from EGP base → target
+// Approximate values; in a real app, fetch dynamically.
 const rates: Record<SupportedCurrency, number> = {
-  USD: 1,
-  EUR: 0.9,
-  EGP: 31,
+  USD: 1,    // 1 USD
+  EUR: 0.9,  // 1 USD ≈ 0.9 EUR
+  EGP: 31,   // 1 USD ≈ 31 EGP (example)
 };
 
 const symbols: Record<SupportedCurrency, string> = {
@@ -27,7 +28,7 @@ const symbols: Record<SupportedCurrency, string> = {
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [currency, setCurrency] = useState<SupportedCurrency>("USD");
+  const [currency, setCurrency] = useState<SupportedCurrency>("EGP");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -43,9 +44,10 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   }, [currency]);
 
   const convert = (amount: number, to: SupportedCurrency = currency) => {
-    // Convert via USD base
-    const usd = amount / rates.USD;
-    return usd * rates[to];
+    // Treat incoming amounts as EGP by default
+    // Convert EGP → USD, then USD → target
+    const usdFromEGP = amount / rates.EGP;
+    return usdFromEGP * rates[to];
   };
 
   const format = (amount: number) => {

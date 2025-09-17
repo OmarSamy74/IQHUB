@@ -50,11 +50,11 @@ const experts = [
 
 export function ExpertExperience() {
   return (
-    <section className="py-20 px-4 bg-white">
+    <section className="py-20 px-4 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4"><T k="experts_title" /></h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4"><T k="experts_title" /></h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             <T k="experts_subtitle" />
           </p>
         </div>
@@ -82,19 +82,19 @@ export function ExpertExperience() {
                 </div>
               </div>
               
-              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 {expert.name}
               </h3>
               
-              <p className="text-sm text-gray-600 leading-relaxed mb-3">
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
                 {expert.title}
               </p>
 
-              <div className="text-xs text-gray-500 mb-2">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                 {expert.achievements}
               </div>
 
-              <div className="text-xs text-blue-500 font-medium">
+              <div className="text-xs text-blue-500 dark:text-blue-400 font-medium">
                 {expert.social}
               </div>
             </div>
@@ -102,35 +102,35 @@ export function ExpertExperience() {
         </div>
 
         <div className="mt-16 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               <T k="experts_why_title" />
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🏆</span>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2"><T k="experts_track_record" /></h4>
-                <p className="text-sm text-gray-600">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2"><T k="experts_track_record" /></h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   <T k="experts_track_record_desc" />
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🔬</span>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2"><T k="experts_research" /></h4>
-                <p className="text-sm text-gray-600">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2"><T k="experts_research" /></h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   <T k="experts_research_desc" />
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🌍</span>
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2"><T k="experts_global" /></h4>
-                <p className="text-sm text-gray-600">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2"><T k="experts_global" /></h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   <T k="experts_global_desc" />
                 </p>
               </div>

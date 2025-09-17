@@ -1,16 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { Navbar, Footer } from "@/components";
-const Price = dynamic(() => import("@/components/price"), { ssr: false });
-const T = dynamic(() => import("@/components/T"), { ssr: false });
+const Price = nextDynamic(() => import("@/components/price"), { ssr: false });
+const T = nextDynamic(() => import("@/components/T"), { ssr: false });
 
 // Generate static params for all courses
 export async function generateStaticParams() {
   return [
     { courseId: 'master-sports-nursing' },
-    { courseId: 'executive-financial-strategy' }
+    { courseId: 'executive-financial-strategy' },
+    { courseId: 'performance-analyst' }
   ];
 }
 
@@ -27,7 +30,7 @@ const courseData = {
     duration: "12 months",
     level: "Master's Degree",
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=center",
-    price: 8500,
+    price: 9000,
     rating: 4.9,
     students: 1247,
     instructor: "Dr. Eva Ferrer Vidal-Barraquer",
@@ -91,12 +94,106 @@ const courseData = {
       "Navigate regulatory frameworks",
       "Lead digital transformation initiatives"
     ]
+  },
+  "performance-analyst": {
+    id: "performance-analyst",
+    title: "Performance Analyst",
+    titleAr: "محلل الأداء",
+    type: "courses",
+    modality: "Hybrid",
+    modalityAr: "مختلط",
+    subjects: ["Sports Analytics", "Coaching"],
+    description: "Weekly role and workflow of a football performance analyst from match day to in-game analysis.",
+    descriptionAr: "الدور الأسبوعي وسير عمل محلل الأداء في كرة القدم من يوم المباراة إلى التحليل أثناء المباراة.",
+    fullDescription: "Learn the end-to-end weekly responsibilities of a football performance analyst: post-match analysis, opponent study, offensive/defensive reporting, team presentations, and in‑game analysis. Content inspired by a professional workflow .",
+    fullDescriptionAr: "تعرّف على المسؤوليات الأسبوعية لمحلل الأداء في كرة القدم: تحليل ما بعد المباراة، دراسة المنافس، إعداد تقارير هجومية/دفاعية، العروض التقديمية للفريق، والتحليل أثناء المباراة.",
+    duration: "6 weeks",
+    level: "Certificate",
+    levelAr: "شهادة",
+    image: "/image/performance-analysis.jpg",
+    previewUrl: "https://www.facebook.com/reel/1300455538311275",
+    price: 9000,
+    rating: 4.8,
+    students: 1240,
+    instructor: "Eng. Ahmed Essam",
+    instructorImage: "/image/ahmed-essam.jpg",
+    instructors: [
+      { name: "Eng. Ahmed Essam", title: "Head of the Analysis Department, ENPPI Club", avatar: "/image/ahmed-essam.jpg" },
+      { name: "Eng. Ahmed Zoghby", title: "Performance Analyst, ENPPI Club", avatar: "/image/ahmed-zoghby.jpg" },
+      { name: "Captain Ayman Mohammed", title: "Performance Analyst, Al Ahly Club", avatar: "/image/ayman-mohammed.jpg" }
+    ],
+    instructorsAr: [
+      { name: "م. أحمد عصام", title: "رئيس قسم التحليل، نادي إنبي", avatar: "/image/ahmed-essam.jpg" },
+      { name: "م. أحمد زغبي", title: "محلل أداء، نادي إنبي", avatar: "/image/ahmed-zoghby.jpg" },
+      { name: "كابتن أيمن محمد", title: "محلل أداء، النادي الأهلي", avatar: "/image/ayman-mohammed.jpg" }
+    ],
+    modules: [
+      "Match day workflows and data collection",
+      "Post-match reporting and technical video creation",
+      "Competitor analysis: strengths, weaknesses, and patterns",
+      "Offensive/defensive phase tagging and reporting",
+      "Team presentation and in‑game (halftime) analysis"
+    ],
+    modulesAr: [
+      "سير عمل يوم المباراة وجمع البيانات",
+      "إعداد تقارير ما بعد المباراة وإنشاء الفيديو التقني",
+      "تحليل المنافس: نقاط القوة والضعف والأنماط",
+      "وسم مراحل الهجوم/الدفاع وإعداد التقارير",
+      "عرض الفريق والتحليل أثناء المباراة (بين الشوطين)"
+    ],
+    requirements: [
+      "Basic knowledge of football tactics",
+      "Familiarity with any video analysis software",
+      "Ability to prepare simple reports and presentations"
+    ],
+    requirementsAr: [
+      "معرفة أساسية بتكتيكات كرة القدم",
+      "الإلمام بأي برنامج لتحليل الفيديو",
+      "القدرة على إعداد تقارير وعروض تقديمية بسيطة"
+    ],
+    outcomes: [
+      "Execute a structured weekly analyst workflow",
+      "Produce actionable offensive/defensive reports",
+      "Deliver concise presentations to coaching staff",
+      "Support in‑game tactical adjustments with video"
+    ],
+    outcomesAr: [
+      "تنفيذ سير عمل أسبوعي منظم للمحلل",
+      "إنتاج تقارير هجومية/دفاعية قابلة للتنفيذ",
+      "تقديم عروض موجزة للجهاز الفني",
+      "دعم التعديلات التكتيكية أثناء المباراة بالفيديو"
+    ]
   }
 };
 
 export default function CourseDetailPage({ params }: { params: { courseId: string } }) {
   const courseId = params.courseId;
   const course = courseData[courseId as keyof typeof courseData];
+  const [locale, setLocale] = useState<"en" | "ar">("en");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const lang = params.get("lang");
+      setLocale(lang === "ar" ? "ar" : "en");
+    }
+  }, []);
+
+  const displayTitle = (locale === "ar" && (course as any).titleAr) ? (course as any).titleAr : course.title;
+  const displayDesc = (locale === "ar" && (course as any).descriptionAr) ? (course as any).descriptionAr : course.description;
+  const displayFullDesc = (locale === "ar" && (course as any).fullDescriptionAr) ? (course as any).fullDescriptionAr : course.fullDescription;
+  const displayLevel = (locale === "ar" && (course as any).levelAr) ? (course as any).levelAr : course.level;
+  const displayModality = (locale === "ar" && (course as any).modalityAr) ? (course as any).modalityAr : course.modality;
+  const displayDuration = (() => {
+    const d = course.duration;
+    if (locale === "ar") {
+      const weeksMatch = d.match(/^(\d+)\s*weeks?$/i);
+      const monthsMatch = d.match(/^(\d+)\s*months?$/i);
+      if (weeksMatch) return `${weeksMatch[1]} أسبوع`;
+      if (monthsMatch) return `${monthsMatch[1]} شهر`;
+    }
+    return d;
+  })();
 
   if (!course) {
     return (
@@ -127,17 +224,17 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="animate-fade-in">
               <div className="flex items-center gap-2 mb-4">
                 <span className="px-3 py-1 bg-blue-300 dark:bg-blue-400 text-blue-900 dark:text-blue-900 text-sm font-semibold rounded-full">
-                  {course.level}
+                  {displayLevel}
                 </span>
                 <span className="px-3 py-1 bg-white/20 dark:bg-gray-700/50 text-white dark:text-gray-200 text-sm font-semibold rounded-full">
-                  {course.modality}
+                  {displayModality}
                 </span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                {course.title}
+                {displayTitle}
               </h1>
               <p className="text-xl text-blue-100 dark:text-gray-200 mb-8 leading-relaxed">
-                {course.description}
+                {displayDesc}
               </p>
               <div className="flex items-center gap-6 mb-8">
                 <div className="flex items-center gap-2">
@@ -146,7 +243,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                   <span className="text-blue-200">({course.students.toLocaleString()} <T k="course_students_count" />)</span>
                 </div>
                 <div className="text-white">
-                  <span className="text-blue-200"><T k="course_duration" />:</span> {course.duration}
+                  <span className="text-blue-200"><T k="course_duration" />:</span> {displayDuration}
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -156,9 +253,9 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                 >
                   🚀 <T k="course_enroll_now" /> - <Price amount={course.price} />
                 </Link>
-                <button className="border-2 border-white dark:border-gray-300 text-white dark:text-gray-200 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white dark:hover:bg-gray-800 hover:text-blue-900 dark:hover:text-white transition-all duration-300">
+                <a href="#preview" className="border-2 border-white dark:border-gray-300 text-white dark:text-gray-200 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white dark:hover:bg-gray-800 hover:text-blue-900 dark:hover:text-white transition-all duration-300 text-center">
                   📹 <T k="course_watch_preview" />
-                </button>
+                </a>
               </div>
             </div>
             <div className="animate-slide-up">
@@ -183,11 +280,26 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
+            {('previewUrl' in course) && (
+              <div id="preview" className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 md:p-6 animate-fade-in">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_preview" /></h2>
+                <div className="relative w-full" style={{paddingTop: '177.78%'}}>
+                  <iframe
+                    src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent((course as any).previewUrl)}&show_text=false&width=560`}
+                    className="absolute inset-0 w-full h-full rounded-lg"
+                    style={{border: 0, overflow: 'hidden'}}
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen
+                    title="Course Preview"
+                  />
+                </div>
+              </div>
+            )}
             {/* About Course */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_about" /></h2>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
-                {course.fullDescription}
+                {displayFullDesc}
               </p>
             </div>
 
@@ -195,7 +307,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_modules" /></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {course.modules.map((module, index) => (
+                {(locale === "ar" && (course as any).modulesAr ? (course as any).modulesAr : course.modules).map((module: string, index: number) => (
                   <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors">
                     <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
                       {index + 1}
@@ -210,7 +322,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_learn" /></h2>
               <ul className="space-y-4">
-                {course.outcomes.map((outcome, index) => (
+                {(locale === "ar" && (course as any).outcomesAr ? (course as any).outcomesAr : course.outcomes).map((outcome: string, index: number) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-green-500 text-xl">✅</span>
                     <span className="text-gray-700 dark:text-gray-300">{outcome}</span>
@@ -222,25 +334,42 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Instructor */}
+            {/* Instructors */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_instructor" /></h3>
-              <div className="flex items-center gap-4 mb-4">
-                <Image 
-                  src={course.instructorImage} 
-                  alt={course.instructor}
-                  width={64}
-                  height={64}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">{course.instructor}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300"><T k="course_lead_instructor" /></p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_instructors" /></h3>
+              {('instructors' in course ? (course as any).instructors : []).length ? (
+                <div className="space-y-4">
+                  {(locale === "ar" && (course as any).instructorsAr ? (course as any).instructorsAr : (course as any).instructors).map((inst: any, i: number) => (
+                    <div key={i} className="flex items-center gap-4">
+                      {inst.avatar ? (
+                        <Image src={inst.avatar} alt={inst.name} width={56} height={56} className="w-14 h-14 rounded-full object-cover" />
+                      ) : (
+                        <div className="w-14 h-14 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300 font-semibold">
+                          {inst.name.split(' ').map((n: string) => n[0]).join('').slice(0,2)}
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white">{inst.name}</h4>
+                        {inst.title && <p className="text-sm text-gray-600 dark:text-gray-300">{inst.title}</p>}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                <T k="course_experience" />
-              </p>
+              ) : (
+                <div className="flex items-center gap-4 mb-4">
+                  <Image 
+                    src={course.instructorImage} 
+                    alt={course.instructor}
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">{course.instructor}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300"><T k="course_lead_instructor" /></p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Course Info */}
@@ -249,15 +378,15 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-300"><T k="course_level" />:</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">{course.level}</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{displayLevel}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-300"><T k="course_duration" />:</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">{course.duration}</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{displayDuration}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-300"><T k="course_modality" />:</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">{course.modality}</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{displayModality}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-300"><T k="course_students" />:</span>
@@ -276,7 +405,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_requirements" /></h3>
               <ul className="space-y-2">
-                {course.requirements.map((requirement, index) => (
+                {(locale === "ar" && (course as any).requirementsAr ? (course as any).requirementsAr : course.requirements).map((requirement: string, index: number) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                     <span className="text-blue-500 dark:text-blue-400">•</span>
                     <span>{requirement}</span>

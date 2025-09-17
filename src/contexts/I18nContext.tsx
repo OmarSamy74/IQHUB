@@ -131,6 +131,9 @@ const en: Translations = {
   course_students_count: "students",
   course_months: "months",
   course_weeks: "weeks",
+  course_preview: "Course Preview",
+  course_instructors: "Instructors",
+  contact: "Contact",
 };
 
 const ar: Translations = {
@@ -252,6 +255,9 @@ const ar: Translations = {
   course_students_count: "طالب",
   course_months: "شهر",
   course_weeks: "أسبوع",
+  course_preview: "معاينة الدورة",
+  course_instructors: "المدربون",
+  contact: "تواصل",
 };
 
 const dictionary: Record<SupportedLocale, Translations> = { en, ar };
@@ -280,6 +286,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       const browserLang = navigator.language || (navigator as any).userLanguage || "en";
       if (browserLang.toLowerCase().startsWith("ar")) {
         setLocale("ar");
+      } else {
+        setLocale("en");
       }
     }
   }, []);

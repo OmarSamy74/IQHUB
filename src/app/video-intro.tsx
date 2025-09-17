@@ -8,7 +8,7 @@ import { PlayIcon } from "@heroicons/react/24/outline";
 
 export function VideoIntro() {
   return (
-    <div className="p-8">
+    <div className="p-8 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="w-full container px-5 overflow-hidden rounded-xl relative mx-auto mt-20 max-w-6xl ">
         <div className="bg-black/25 z-10 absolute w-full h-full inset-0 rounded-xl" />
         <Image

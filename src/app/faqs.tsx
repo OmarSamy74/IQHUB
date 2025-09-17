@@ -34,13 +34,13 @@ const FAQS = [
 
 export function Faqs() {
   return (
-    <section className="px-8 py-20">
+    <section className="px-8 py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-blue-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-blue-gray-900 dark:text-white mb-4">
             <T k="faq_title" />
           </h1>
-          <p className="text-xl text-gray-500 mx-auto mb-24 lg:w-3/5">
+          <p className="text-xl text-gray-500 dark:text-gray-300 mx-auto mb-24 lg:w-3/5">
             <T k="faq_subtitle" />
           </p>
         </div>
@@ -48,11 +48,11 @@ export function Faqs() {
         <div className="grid gap-20 md:grid-cols-1 lg:grid-cols-3">
           {FAQS.map(({ titleKey, descKey }, index) => (
             <div key={index} className="bg-transparent">
-              <h4 className="text-2xl font-semibold text-blue-gray-900 pb-6">
+              <h4 className="text-2xl font-semibold text-blue-gray-900 dark:text-white pb-6">
                 <T k={titleKey} />
               </h4>
               <div className="pt-2">
-                <p className="font-normal text-gray-500">
+                <p className="font-normal text-gray-500 dark:text-gray-300">
                   <T k={descKey} />
                 </p>
               </div>

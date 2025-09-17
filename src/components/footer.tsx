@@ -17,7 +17,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 export function Footer() {
   return (
-    <footer className="mt-10 bg-brand-blue px-8 pt-12">
+    <footer className="mt-10 bg-brand-blue dark:bg-gray-900 px-8 pt-12 transition-colors duration-300">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
@@ -87,7 +87,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-700 pt-8">
+        <div className="border-t border-white/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white text-center md:text-left font-normal opacity-75 text-sm">
               &copy; {CURRENT_YEAR} IQ Stats Hub. <T k="footer_rights" /> | 

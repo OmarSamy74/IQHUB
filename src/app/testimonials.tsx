@@ -34,16 +34,16 @@ const TESTIMONIALS = [
 
 export function Testimonials() {
   return (
-    <section className="px-10 !py-20">
+    <section className="px-10 !py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="container mx-auto">
         <div className="mb-20 flex w-full flex-col items-center">
-          <div className="mb-10 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-900 text-white ">
+          <div className="mb-10 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-900 dark:bg-gray-700 text-white ">
             <UserIcon className="h-6 w-6" />
           </div>
-          <h2 className="text-3xl font-bold text-blue-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-blue-gray-900 dark:text-white mb-2">
             <T k="testimonials_title" />
           </h2>
-          <p className="text-xl text-gray-600 mb-10 max-w-3xl text-center">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl text-center">
             <T k="testimonials_subtitle" />
           </p>
         </div>

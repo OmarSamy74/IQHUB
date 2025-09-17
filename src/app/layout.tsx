@@ -4,6 +4,7 @@ import { FixedPlugin, Layout } from "@/components";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { I18nProvider } from "@/contexts/I18nContext";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Using system fonts as fallback due to Google Fonts connectivity issues
 const roboto = {
@@ -24,6 +25,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.setAttribute('data-theme', 'light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -34,16 +53,18 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.png" type="image/png" />
       </head>
       <body className={roboto.className}>
-        <ThemeProvider>
-          <I18nProvider>
-            <CurrencyProvider>
-              <Layout>
-                {children}
-                <FixedPlugin />
-              </Layout>
-            </CurrencyProvider>
-          </I18nProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <I18nProvider>
+              <CurrencyProvider>
+                <Layout>
+                  {children}
+                  <FixedPlugin />
+                </Layout>
+              </CurrencyProvider>
+            </I18nProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
