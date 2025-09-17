@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import nextDynamic from "next/dynamic";
@@ -169,31 +167,14 @@ const courseData = {
 export default function CourseDetailPage({ params }: { params: { courseId: string } }) {
   const courseId = params.courseId;
   const course = courseData[courseId as keyof typeof courseData];
-  const [locale, setLocale] = useState<"en" | "ar">("en");
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const lang = params.get("lang");
-      setLocale(lang === "ar" ? "ar" : "en");
-    }
-  }, []);
-
-  const displayTitle = (locale === "ar" && (course as any).titleAr) ? (course as any).titleAr : course.title;
-  const displayDesc = (locale === "ar" && (course as any).descriptionAr) ? (course as any).descriptionAr : course.description;
-  const displayFullDesc = (locale === "ar" && (course as any).fullDescriptionAr) ? (course as any).fullDescriptionAr : course.fullDescription;
-  const displayLevel = (locale === "ar" && (course as any).levelAr) ? (course as any).levelAr : course.level;
-  const displayModality = (locale === "ar" && (course as any).modalityAr) ? (course as any).modalityAr : course.modality;
-  const displayDuration = (() => {
-    const d = course.duration;
-    if (locale === "ar") {
-      const weeksMatch = d.match(/^(\d+)\s*weeks?$/i);
-      const monthsMatch = d.match(/^(\d+)\s*months?$/i);
-      if (weeksMatch) return `${weeksMatch[1]} أسبوع`;
-      if (monthsMatch) return `${monthsMatch[1]} شهر`;
-    }
-    return d;
-  })();
+  // Simplified display variables using only English
+  const displayTitle = course.title;
+  const displayDesc = course.description;
+  const displayFullDesc = course.fullDescription;
+  const displayLevel = course.level;
+  const displayModality = course.modality;
+  const displayDuration = course.duration;
 
   if (!course) {
     return (
@@ -307,7 +288,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_modules" /></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {(locale === "ar" && (course as any).modulesAr ? (course as any).modulesAr : course.modules).map((module: string, index: number) => (
+                {course.modules.map((module: string, index: number) => (
                   <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors">
                     <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
                       {index + 1}
@@ -322,7 +303,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6"><T k="course_learn" /></h2>
               <ul className="space-y-4">
-                {(locale === "ar" && (course as any).outcomesAr ? (course as any).outcomesAr : course.outcomes).map((outcome: string, index: number) => (
+                {course.outcomes.map((outcome: string, index: number) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-green-500 text-xl">✅</span>
                     <span className="text-gray-700 dark:text-gray-300">{outcome}</span>
@@ -339,7 +320,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_instructors" /></h3>
               {('instructors' in course ? (course as any).instructors : []).length ? (
                 <div className="space-y-4">
-                  {(locale === "ar" && (course as any).instructorsAr ? (course as any).instructorsAr : (course as any).instructors).map((inst: any, i: number) => (
+                  {((course as any).instructors || []).map((inst: any, i: number) => (
                     <div key={i} className="flex items-center gap-4">
                       {inst.avatar ? (
                         <Image src={inst.avatar} alt={inst.name} width={56} height={56} className="w-14 h-14 rounded-full object-cover" />
@@ -405,7 +386,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-slide-up">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4"><T k="course_requirements" /></h3>
               <ul className="space-y-2">
-                {(locale === "ar" && (course as any).requirementsAr ? (course as any).requirementsAr : course.requirements).map((requirement: string, index: number) => (
+                {course.requirements.map((requirement: string, index: number) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                     <span className="text-blue-500 dark:text-blue-400">•</span>
                     <span>{requirement}</span>
