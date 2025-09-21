@@ -5,6 +5,10 @@ const nextConfig = {
     images: {
       unoptimized: true, // Disable default image optimization for static export
     },
+    // Disable server-side features for static export
+    experimental: {
+      appDir: true,
+    },
     // Fix for static export with App Router
     distDir: 'out',
 };
